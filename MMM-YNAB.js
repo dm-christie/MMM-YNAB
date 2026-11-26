@@ -11,18 +11,27 @@ Module.register("MMM-YNAB", {
     },
 
     getDom: function () {
-        var wrapper = document.createElement("div");
-        wrapper.classList = ["xsmall"];
-        wrapper.innerHTML = "Loading YNAB";
-        if (this.result.items && this.result.items.length > 0) {
-            for (let i of this.result.items) {
-                var clsBalance = "ynab-balance";
-                if (a.balance < 0) {
-                    clsBalance += " negative";
-                }
-                wrapper.innerHTML = this.result.items.map(a => "<span class='ynab-name'>" + a.name + "</span><span class='" + clsBalance + "'>$" + (a.balance / 1000).toFixed(2) + "</span>").join('');
-            }
+        const wrapper = document.createElement("div");
+        wrapper.className = "xsmall";
+
+        const items = this.result.items;
+        if (!items || items.length === 0) {
+            wrapper.textContent = "Loading YNAB";
+            return wrapper;
         }
+
+        items.forEach(a => {
+            const name = document.createElement("span");
+            name.className = "ynab-name";
+            name.textContent = a.name;
+
+            const bal = document.createElement("span");
+            bal.className = "ynab-balance" + (a.balance < 0 ? " negative" : "");
+            bal.textContent = "$" + (a.balance / 1000).toFixed(2);
+
+            wrapper.appendChild(name);
+            wrapper.appendChild(bal);
+        });
         return wrapper;
     },
 
