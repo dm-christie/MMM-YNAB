@@ -2,7 +2,8 @@ Module.register("MMM-YNAB", {
     result: [],
     defaults: {
         token: "",
-        categories: [ "Household", "Pets", "Grocery", "Lunch", "Kids Clothes", "Restaurants", "Spontaneous Fun" ]
+        categories: ["Household", "Pets", "Grocery", "Lunch", "Kids Clothes", "Restaurants", "Spontaneous Fun"],
+        budgetId: "" // optional, if not provided the first budget will be used
     },
 
     start: function () {
@@ -15,7 +16,11 @@ Module.register("MMM-YNAB", {
         wrapper.innerHTML = "Loading YNAB";
         if (this.result.items && this.result.items.length > 0) {
             for (let i of this.result.items) {
-                wrapper.innerHTML = this.result.items.map(a => "<span class='ynab-name'>" + a.name + "</span><span class='ynab-balance'>$" + (a.balance/1000).toFixed(2) + "</span>").join('');
+                var clsBalance = "ynab-balance";
+                if (a.balance < 0) {
+                    clsBalance += " negative";
+                }
+                wrapper.innerHTML = this.result.items.map(a => "<span class='ynab-name'>" + a.name + "</span><span class='" + clsBalance + "'>$" + (a.balance / 1000).toFixed(2) + "</span>").join('');
             }
         }
         return wrapper;
@@ -30,7 +35,7 @@ Module.register("MMM-YNAB", {
         }
     },
 
-    getStyles: function() {
+    getStyles: function () {
         return [
             this.file('MMM-YNAB.css')
         ]

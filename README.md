@@ -6,7 +6,7 @@ This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror
 
 ## Installation ##
 
-1. Run `git clone https://github.com/thesoftwarejedi/MMM-YNAB.git` in the directory `~/MagicMirror/modules`
+1. Run `git clone https://github.com/dm-christie/MMM-YNAB.git` in the directory `~/MagicMirror/modules`
 2. Change directories to the new folder `cd MMM-YNAB` and then run `npm install`
 
 ## Using the module
